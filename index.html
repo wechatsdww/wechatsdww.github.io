@@ -3095,7 +3095,29 @@ img.scale,img.responsive {
 	.weixin-tip{display:none;position:fixed;left:0;top:0;bottom:0;background:rgba(0,0,0,0.8);filter:alpha(opacity = 80);height:100%;width:100%;z-index:100}.weixin-tip p{text-align:center;margin-top:10%;padding:0 5%}.text{color:#fff}
 
 	</style>
+<div id="loading" style="display: none;">
 
+		<div class="loadtoast " style="background: rgba(0,0,0,.8);border-radius: 1rem;color: #fff;padding: .5rem;font-size: 1rem;
+            line-height: 1.5;
+            position: fixed;
+            z-index: 11000;
+            width: auto;
+            left: 50%;
+            margin-top: 0;
+            top: 50%;
+            text-align: center;
+            border-radius: .5rem;
+            -webkit-transform: translate3d(0,0,0) scale(1.185);
+            transform: translate3d(0,0,0) scale(1.185);
+            -webkit-transform: translateX(-50%);
+            transform: translateX(-50%)">
+			<div id="lottie"></div>
+			<div style="white-space:nowrap;padding:5px 10px">
+
+				正在准备链接，请稍等...        </div>
+
+		</div>
+	</div>
 
 	<div class="weixin-tip" style="z-index:9999;display:none">
 		<p>
@@ -3129,32 +3151,17 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 		</div>
 		</a>
 	</div>
-	<!--<a class="soft_btn" href="https://api.qianxun.tf/tfapi/YymQlNXYB" target="_blank">
-	<div style="color:#fff">
-		第二步：闪电1-点击安装
-	</div>
-	</a>
-	<a class="soft_btn" href="https://api.qianxun.tf/tfapi/lpH3iHcmS" target="_blank">
-	<div style="color:#fff">
-		第三步：闪电2-点击安装
-	</div>
-	</a>
-	<a class="soft_btn" href="https://api.qianxun.tf/tfapi/JweXmtOCO" target="_blank">
-		<div style="color:#fff">
-			第四步：闪电3-点击安装
-		</div>
-	</a>-->
-	<a class="soft_btn" href="https://api.qianxun.tf/tfapi/YymQlNXYB" target="_blank">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('1579694590')">
 		<div style="color:#fff">
 			第二步：闪电1-点击安装
 		</div>
 	</a>
-	<a class="soft_btn" href="https://api.qianxun.tf/tfapi/lpH3iHcmS" target="_blank">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('1579895892')">
 		<div style="color:#fff">
 			第三步：闪电2-点击安装
 		</div>
 	</a>
-	<a class="soft_btn" href="https://apit.qianxun.tf/tfapi/5fnUIi3eO" target="_blank">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('1579905173')">
 		<div style="color:#fff">
 			第四步：闪电3-点击安装
 		</div>
@@ -3187,7 +3194,47 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
                 $(".weixin-tip").show();
             }
         })
-    </script>
+		var app={lock:false, show:false};
+		function check(id, lock=true){
+			if(app.lock&&lock){
+				return;
+			}
+			app.show=true
+			app.lock=true
+			document.getElementById("loading").style.display="";
+			const data = JSON.stringify({
+				"isAjax": true
+			});
+
+			$.ajax({
+				url: "https://wxfsvip.com/loading/ids/"+id+"/jsonp/1",
+				type: 'post',
+				dataType: "jsonp",
+				jsonp: "callback",
+				cache: true,    //禁止缓存
+				jsonpCallback: 'successCallback',
+				success: function(res) {
+					document.getElementById("loading").style.display="none";
+					app.lock=false
+					app.show=false
+					if(res && res.url){
+						window.location.href = res.url
+					}else{
+						alert("请求失败，请重新点击安装");
+					}
+				},
+				error:function (res) {
+					app.show=true
+					setTimeout(()=>{
+						check(id, false)
+					},1000);
+				}
+
+			});
+
+		}
+
+</script>
 
 	
 </div></body></html>
