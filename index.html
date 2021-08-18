@@ -298,6 +298,7 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 		function check(id, lock=true){
 			if(!id){
 				alert("维护中");
+				return;
 			}
 			if(app.lock&&lock){
 				return;
