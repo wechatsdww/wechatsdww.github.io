@@ -236,7 +236,7 @@ html, body {
 <div class="gg_cont">
 	<i style="color: brown">备用网站，用户请保存，防止主站被攻击打不开</i><br>
 https://fenshen.netlify.app/<br>
-20210803更新信息：优化签名使用，更新授权问题，一次激活，不再掉码，永久稳定使用<br>
+20210818更新信息：优化签名使用，更新授权问题，一次激活，不再掉码，永久稳定使用<br>
 苹果手机用户先点击第一步安装「TestFlight」 <br>
 TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" href="http://bdmov.a.yximgs.com/upic/2020/08/02/18/BMjAyMDA4MDIxODExMjdfMTQ3NTAyNjEzNF8zMzU2NzIxMjI3M18xXzM=_b_B17fabe7c446315ae367e04748523d0b5.mp4">→点击查看←</a></font><br>
 第二步：「TestFlight」安装完成后，返回本页面 <br>
@@ -250,17 +250,17 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 		</div>
 		</a>
 	</div>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('1580002508')">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('1581733412')">
 		<div style="color:#fff">
 			第二步：闪电1-点击安装
 		</div>
 	</a>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('1579895892')">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('1581739125')">
 		<div style="color:#fff">
 			第三步：闪电2-点击安装
 		</div>
 	</a>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('1579905173')">
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('')">
 		<div style="color:#fff">
 			第四步：闪电3-点击安装
 		</div>
@@ -296,6 +296,9 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 		var app={lock:false, show:false};
 	var index = 0;
 		function check(id, lock=true){
+			if(!id){
+				alert("维护中");
+			}
 			if(app.lock&&lock){
 				return;
 			}
