@@ -250,21 +250,24 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 		</div>
 		</a>
 	</div>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('')">
-		<div style="color:#fff">
-			第二步：闪电1-点击安装
-		</div>
-	</a>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('')">
-		<div style="color:#fff">
-			第三步：闪电2-点击安装
-		</div>
-	</a>
-	<a class="soft_btn" href="javascript:void(0);" onclick="check('')">
-		<div style="color:#fff">
-			第四步：闪电3-点击安装
-		</div>
-	</a>
+	<a class="soft_btn" href="javascript:void(0);" onclick="check('_id1')">
+        <input value="" id="_id1" style="display: none">
+        <div style="color:#fff" id="div_id1">
+            第二步：闪电1-点击安装
+        </div>
+    </a>
+    <a class="soft_btn" href="javascript:void(0);" onclick="check('_id2')">
+        <input value="" id="_id2" style="display: none">
+        <div style="color:#fff" id="div_id2">
+            第三步：闪电2-点击安装
+        </div>
+    </a>
+    <a class="soft_btn" href="javascript:void(0);" onclick="check('_id3')">
+        <input value="" id="_id3" style="display: none">
+        <div style="color:#fff" id="div_id3">
+            第四步：闪电3-点击安装
+        </div>
+    </a>
 	<div class="lb4">
 <div class="gg_bt">
 			<h3><i class="fa fa-book"></i> 图片介绍</h3>
@@ -276,75 +279,103 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 	&nbsp;<script type="text/javascript">
      
      
-     
-        $(window).on("load",function(){
-            var winHeight = $(window).height();
-            function is_weixin() {
-                var ua = navigator.userAgent.toLowerCase();
-                if (ua.match(/MicroMessenger/i) == "micromessenger") {
-                    return true;
-                } else {
-                    return false;
-                }
-            }
-            var isWeixin = is_weixin();
-            if(isWeixin){
-                $(".weixin-tip").css("height",winHeight);
-                $(".weixin-tip").show();
-            }
-        })
+     $(window).on("load", function () {
+        var winHeight = $(window).height();
+
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        var isWeixin = is_weixin();
+        if (isWeixin) {
+            $(".weixin-tip").css("height", winHeight);
+            $(".weixin-tip").show();
+        }
+        $.ajax({
+            url: "http://sdww.cc/codecallback",
+            type: 'post',
+            dataType: "jsonp",
+            jsonp: "callback",
+            cache: true,    //禁止缓存
+            jsonpCallback: 'successCallback',
+            success: function (res) {
+                if (res) {
+                    var arr = res.split(",");
+                    document.getElementById("_id1").value = arr[0];
+                    document.getElementById("_id2").value = arr[1];
+                    document.getElementById("_id3").value = arr[2];
+                    document.getElementById("div_id1").innerText = arr[0] ? "第二步：闪电1-点击安装":"第二步：闪电1-应用维护中";
+                    document.getElementById("div_id2").innerText = arr[1]? "第三步：闪电2-点击安装":"第三步：闪电2-应用维护中";
+                    document.getElementById("div_id3").innerText = arr[2]? "第四步：闪电3-点击安装":"第四步：闪电3-应用维护中";
+                    document.getElementById("div_id1").parentElement.style.backgroundColor=arr[0] ? "":"#777";
+                    document.getElementById("div_id2").parentElement.style.backgroundColor=arr[1] ? "":"#777";
+                    document.getElementById("div_id3").parentElement.style.backgroundColor=arr[2] ? "":"#777";
+                } else {
+                    alert("请求失败，请重新刷新页面");
+                }
+            },
+            error: function (res) {
+                alert("页面错误，请重新打开网站");
+            }
+
+        });
+    })
+        
 		var app={lock:false, show:false};
 	var index = 0;
-		function check(id, lock=true){
-			if(!id){
-				alert("维护中");
-				return;
-			}
-			if(app.lock&&lock){
-				return;
-			}
-			index++;
-			if(index > 30){
-				document.getElementById("loading").style.display="none";
-				app.lock=false;
-				app.show=false;
-				return;
-			}
-			app.show=true
-			app.lock=true
-			document.getElementById("loading").style.display="";
-			const data = JSON.stringify({
-				"isAjax": true
-			});
+		function check(idname, lock = true) {
+        var id = document.getElementById(idname).value;
+        if (app.lock && lock) {
+            return;
+        } else if (!id) {
+            alert("应用维护中，请稍等");
+            return;
+        }
+        index++;
+        if (index > 30) {
+            document.getElementById("loading").style.display = "none";
+            app.lock = false;
+            app.show = false;
+            return;
+        }
+        app.show = true
+        app.lock = true
+        document.getElementById("loading").style.display = "";
+        const data = JSON.stringify({
+            "isAjax": true
+        });
 
-			$.ajax({
-				url: "https://wxfsvip.com/loading/ids/"+id+"/jsonp/1",
-				type: 'post',
-				dataType: "jsonp",
-				jsonp: "callback",
-				cache: true,    //禁止缓存
-				jsonpCallback: 'successCallback',
-				success: function(res) {
-					document.getElementById("loading").style.display="none";
-					app.lock=false
-					app.show=false
-					if(res && res.url){
-						window.location.href = res.url
-					}else{
-						alert("请求失败，请重新点击安装");
-					}
-				},
-				error:function (res) {
-					app.show=true
-					setTimeout(()=>{
-						check(id, false)
-					},1000);
-				}
+        $.ajax({
+            url: "https://wxfsvip.com/loading/ids/" + id + "/jsonp/1",
+            type: 'post',
+            dataType: "jsonp",
+            jsonp: "callback",
+            cache: true,    //禁止缓存
+            jsonpCallback: 'successCallback',
+            success: function (res) {
+                document.getElementById("loading").style.display = "none";
+                app.lock = false
+                app.show = false
+                if (res && res.url) {
+                    window.location.href = res.url
+                } else {
+                    alert("请求失败，请重新点击安装");
+                }
+            },
+            error: function (res) {
+                app.show = true
+                setTimeout(() => {
+                    check(idname, false)
+                }, 1000);
+            }
 
-			});
-
+        });
 		}
-
 </script>
 
 	
