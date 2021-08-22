@@ -329,7 +329,7 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
     var xhr = e.target;
 	if (xhr.responseText && JSON.parse(xhr.responseText)) {
 		
-			var arr = JSON.parse(xhr.responseText).data ? JSON.parse(xhr.responseText).data.split(",") : {"","",""};
+			var arr = JSON.parse(xhr.responseText).data ? JSON.parse(xhr.responseText).data.split(",") : ["","",""];
                     document.getElementById("_id1").value = arr[0];
                     document.getElementById("_id2").value = arr[1];
                     document.getElementById("_id3").value = arr[2];
