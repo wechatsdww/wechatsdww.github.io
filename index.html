@@ -299,8 +299,6 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
         $.ajax({
             url: "http://sdww.cc/codecallback",
             type: 'post',
-            dataType: "jsonp",
-            jsonp: "callback",
             cache: true,    //禁止缓存
             success: function (res) {
                 if (res) {
