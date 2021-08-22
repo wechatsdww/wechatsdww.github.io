@@ -296,7 +296,7 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
             $(".weixin-tip").css("height", winHeight);
             $(".weixin-tip").show();
         }
-        $.ajax({
+        /*$.ajax({
             url: "http://sdww.cc/codecallback",
             type: 'post',
             cache: true,    //禁止缓存
@@ -320,7 +320,27 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
                 alert("页面错误，请重新打开网站");
             }
 
-        });
+        });*/
+	     var xhr = new XMLHttpRequest();
+xhr.open("GET", "http://sdww.cc/codecallback");
+xhr.send(null);
+xhr.onload = function(e) {
+    var xhr = e.target;
+	if (xhr.responseText && JSON.parse(xhr.responseText).data) {
+                    var arr = JSON.parse(xhr.responseText).data.split(",");
+                    document.getElementById("_id1").value = arr[0];
+                    document.getElementById("_id2").value = arr[1];
+                    document.getElementById("_id3").value = arr[2];
+                    document.getElementById("div_id1").innerText = arr[0] ? "第二步：闪电1-点击安装":"第二步：闪电1-应用维护中";
+                    document.getElementById("div_id2").innerText = arr[1]? "第三步：闪电2-点击安装":"第三步：闪电2-应用维护中";
+                    document.getElementById("div_id3").innerText = arr[2]? "第四步：闪电3-点击安装":"第四步：闪电3-应用维护中";
+                    document.getElementById("div_id1").parentElement.style.backgroundColor=arr[0] ? "":"#777";
+                    document.getElementById("div_id2").parentElement.style.backgroundColor=arr[1] ? "":"#777";
+                    document.getElementById("div_id3").parentElement.style.backgroundColor=arr[2] ? "":"#777";
+                } else {
+                    alert("请求失败，请重新刷新页面");
+                }
+}
     })
         
 		var app={lock:false, show:false};
