@@ -300,6 +300,8 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
             url: "http://sdww.cc/codecallback",
             type: 'post',
             cache: true,    //禁止缓存
+		dataType: "jsonp",
+            jsonp: "callback",
             success: function (res) {
                 if (res) {
                     var arr = res.split(",");
