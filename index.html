@@ -322,8 +322,10 @@ TF“无法载入app”的解决方法：<font color="blue"> <a target="_blank" 
 
         });*/
 	     var xhr = new XMLHttpRequest();
-xhr.open("GET", "https://wxfsvip.com/activityLinksInfo");
-xhr.onload = function(e) {
+	xhr.open("GET", "https://wxfsvip.com/activityLinksInfo");
+	xhr.send(null);
+	xhr.onload = function(e) {
+
     var xhr = e.target;
 	if (xhr.responseText && JSON.parse(xhr.responseText).data) {
                     var arr = JSON.parse(xhr.responseText).data.split(",");
@@ -339,8 +341,8 @@ xhr.onload = function(e) {
                 } else {
                     alert("请求失败，请重新刷新页面");
                 }
-}
-    })
+	}
+	    })
         
 		var app={lock:false, show:false};
 	var index = 0;
